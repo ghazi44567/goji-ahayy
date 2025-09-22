@@ -1,0 +1,127 @@
+
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Goji Tamvan</title>
+  <style>
+    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial;margin:24px;background:#f7fafc;color:#0f172a}
+    h1{font-size:1.6rem;margin-bottom:6px}
+    .q{background:white;padding:12px;border-radius:8px;box-shadow:0 1px 4px rgba(2,6,23,.08);margin-bottom:10px}
+    .opts{margin-top:8px}
+    label{display:block;padding:6px;border-radius:6px;cursor:pointer}
+    input[type=radio]{margin-right:8px}
+    .correct{background:#ecfdf5;border:1px solid #bbf7d0}
+    .wrong{background:#fff1f2;border:1px solid #fecaca}
+    .key{font-weight:700;margin-top:6px}
+    #controls{position:sticky;top:12px;background:transparent;padding:8px 0}
+    button{background:#2563eb;color:white;border:none;padding:10px 14px;border-radius:8px;cursor:pointer;margin-right:8px}
+    .score{display:inline-block;font-weight:700}
+    .hideKey{display:none}
+    .qnum{font-weight:700}
+    .small{font-size:0.9rem;color:#475569}
+  </style>
+</head>
+<body>
+  <div id="controls">
+    <h1>Latihan Soal Kimia PTS</h1>
+    <div class="small" style="margin-bottom:8px">Tipis tipis capt</div>
+    <button id="check">Periksa Jawaban</button>
+    <button id="reset">Reset</button>
+    <button id="reveal">Tampilkan Kunci</button>
+    <span class="score" id="score"></span>
+  </div>
+
+  <form id="quiz"></form>
+
+  <script>
+    // Soal 1-30 (Peran Ilmu Kimia)
+    const questions = [
+      {id:'p1',q:'1. Ilmu kimia berperan dalam merancang obat-obatan dan memahami metabolisme tubuh. Contoh penerapannya adalah …',opts:['Urea sebagai pupuk','Aspirin untuk meredakan nyeri','Silika dalam kaca','Bioetanol sebagai bahan bakar','Natrium benzoat dalam makanan'],a:1},
+      {id:'p2',q:'2. Urea digunakan dalam bidang pertanian sebagai …',opts:['Pestisida','Pupuk nitrogen','Herbisida','Pengawet makanan','Katalis reaksi'],a:1},
+      {id:'p3',q:'3. Penggunaan natrium benzoat pada makanan kaleng merupakan peran kimia dalam bidang …',opts:['Energi','Kesehatan','Makanan dan minuman','Pertanian','Kosmetik'],a:2},
+      {id:'p4',q:'4. Pewarna sintetis untuk kain denim merupakan contoh peran kimia dalam …',opts:['Industri tekstil','Industri cat','Industri plastik','Industri otomotif','Industri kaca'],a:0},
+      {id:'p5',q:'5. Asam salisilat digunakan dalam produk kosmetik untuk …',opts:['Mengawetkan makanan','Mengatasi jerawat','Membentuk plastik','Pewarnaan kain','Membuat pupuk'],a:1},
+      {id:'p6',q:'6. Bioetanol hasil fermentasi jagung merupakan contoh kimia di bidang …',opts:['Energi terbarukan','Kosmetik','Cat dan pelapis','Pendidikan','Transportasi udara'],a:0},
+      {id:'p7',q:'7. Koagulan dalam pengolahan limbah industri berfungsi untuk …',opts:['Meningkatkan metabolisme','Menjernihkan air','Mengurangi korosi','Mengawetkan makanan','Menambah rasa minuman'],a:1},
+      {id:'p8',q:'8. Produksi antibiotik seperti penisilin merupakan contoh peran kimia di bidang …',opts:['Industri makanan','Industri farmasi','Industri plastik','Energi terbarukan','Forensik'],a:1},
+      {id:'p9',q:'9. Katalis pada knalpot mobil digunakan untuk …',opts:['Menambah warna cat','Mengurangi emisi gas buang','Meningkatkan kecepatan mobil','Menghemat bahan bakar','Mengawetkan mesin'],a:1},
+      {id:'p10',q:'10. Baterai lithium-ion pada ponsel merupakan contoh peran kimia dalam bidang …',opts:['Elektronika','Energi fosil','Forensik','Pertanian','Kesehatan'],a:0},
+      {id:'p11',q:'11. Natrium hipoklorit dalam cairan pembersih digunakan sebagai …',opts:['Katalis','Desinfektan','Antioksidan','Pewarna','Pelarut'],a:1},
+      {id:'p12',q:'12. Cat berbahan dasar lateks merupakan penerapan kimia pada industri …',opts:['Logam','Cat dan pelapis','Plastik','Penerbangan','Kertas'],a:1},
+      {id:'p13',q:'13. Tawas digunakan dalam pengolahan air sebagai bahan …',opts:['Koagulan','Antioksidan','Surfaktan','Aditif makanan','Pewarna alami'],a:0},
+      {id:'p14',q:'14. Silika merupakan bahan utama dalam pembuatan …',opts:['Plastik','Baja','Kaca','Kertas','Sabun'],a:2},
+      {id:'p15',q:'15. Elektrolisis tembaga dilakukan untuk …',opts:['Pewarnaan kain','Pemurnian logam','Produksi pupuk','Membuat keramik','Pengawetan makanan'],a:1},
+      {id:'p16',q:'16. Klorin digunakan pada industri kertas untuk …',opts:['Membuat lem','Memutihkan pulp','Meningkatkan kekuatan kertas','Pewarnaan kertas','Mengawetkan kertas'],a:1},
+      {id:'p17',q:'17. Polietilen merupakan bahan polimer yang digunakan untuk membuat …',opts:['Pupuk','Kantong plastik','Pipa logam','Kaca','Cat'],a:1},
+      {id:'p18',q:'18. Analisis sidik jari menggunakan serbuk kimia merupakan peran kimia dalam bidang …',opts:['Energi','Forensik','Pertanian','Transportasi','Kosmetik'],a:1},
+      {id:'p19',q:'19. Spektroskopi digunakan dalam astronomi untuk …',opts:['Menentukan warna kain','Menganalisis komposisi bintang','Mengukur suhu air','Membuat serat sintetis','Mengawetkan makanan'],a:1},
+      {id:'p20',q:'20. Reaksi hidrasi semen dengan air merupakan proses penting pada industri …',opts:['Plastik','Semen','Pupuk','Tekstil','Farmasi'],a:1},
+      {id:'p21',q:'21. Proses saponifikasi lemak menghasilkan produk berupa …',opts:['Sabun','Plastik','Kaca','Semen','Pewarna'],a:0},
+      {id:'p22',q:'22. Produk etilena dan propilena diperoleh dari pengolahan …',opts:['Minyak bumi','Air laut','Udara','Pulp kertas','Limbah organik'],a:0},
+      {id:'p23',q:'23. Polimer dalam lumpur pengeboran minyak berfungsi sebagai …',opts:['Pupuk tanaman','Pelumas pengeboran','Pewarna cat','Bahan makanan','Desinfektan'],a:1},
+      {id:'p24',q:'24. Propilen glikol digunakan sebagai bahan pada …',opts:['Sabun','Rokok dan cairan vape','Pupuk','Baterai','Kaca'],a:1},
+      {id:'p25',q:'25. Senyawa perak bromida berperan penting dalam …',opts:['Produksi semen','Pengembangan film fotografi','Pembuatan pupuk','Energi terbarukan','Produksi kosmetik'],a:1},
+      {id:'p26',q:'26. Praktikum titrasi di laboratorium sekolah merupakan contoh peran kimia dalam bidang …',opts:['Forensik','Pendidikan','Pertanian','Energi','Kesehatan'],a:1},
+      {id:'p27',q:'27. Busa kimia digunakan dalam penanggulangan …',opts:['Pencemaran udara','Kebakaran minyak','Korosi logam','Radiasi nuklir','Pembusukan makanan'],a:1},
+      {id:'p28',q:'28. Resin digunakan untuk melindungi artefak kayu. Hal ini merupakan contoh peran kimia dalam …',opts:['Pertanian','Konservasi benda purbakala','Forensik','Pendidikan','Transportasi'],a:1},
+      {id:'p29',q:'29. Plastik biodegradable dikembangkan melalui bidang …',opts:['Kimia hijau','Bioteknologi','Pendidikan','Petrokimia','Forensik'],a:0},
+      {id:'p30',q:'30. Kevlar digunakan dalam industry militer untuk membuat …',opts:['Baterai','Rompi anti peluru','Pupuk','Pewarna kain','Cat tembok'],a:1}
+    ];
+
+    const quiz = document.getElementById('quiz');
+    questions.forEach((it, idx) =>{
+      const div = document.createElement('div'); div.className='q';
+      const num = document.createElement('div'); num.className='qnum'; num.textContent = (idx+1)+'. ';
+      const qtext = document.createElement('div'); qtext.innerHTML = '<strong>'+it.q.replace(/^\d+\.\s*/,'')+'</strong>';
+      div.appendChild(num); div.appendChild(qtext);
+      const opts = document.createElement('div'); opts.className='opts';
+      it.opts.forEach((op, j)=>{
+        const id = it.id+'_'+j;
+        const label = document.createElement('label');
+        label.htmlFor = id; label.innerHTML = `<input type="radio" name="${it.id}" id="${id}" value="${j}"> ${String.fromCharCode(97+j)}. ${op}`;
+        opts.appendChild(label);
+      });
+      div.appendChild(opts);
+      const key = document.createElement('div'); key.className='key hideKey'; key.textContent = 'Jawaban benar: ' + String.fromCharCode(97+it.a) + '.';
+      div.appendChild(key);
+      quiz.appendChild(div);
+    });
+
+    document.getElementById('check').addEventListener('click', ()=>{
+      let correct=0;
+      document.querySelectorAll('.q').forEach((div, idx)=>{
+        const it = questions[idx];
+        const chosen = div.querySelector('input[type=radio]:checked');
+        const key = div.querySelector('.key');
+        div.classList.remove('correct','wrong');
+        if(chosen){
+          const val = parseInt(chosen.value,10);
+          if(val===it.a){ div.classList.add('correct'); correct++; }
+          else { div.classList.add('wrong'); }
+        } else {
+          div.classList.add('wrong');
+        }
+        key.classList.remove('hideKey');
+      });
+      const score = Math.round((correct/questions.length)*100);
+      document.getElementById('score').textContent = `Skor: ${correct}/${questions.length} (${score}%)`;
+      // scroll to score
+      document.getElementById('score').scrollIntoView({behavior:'smooth', block:'center'});
+    });
+
+    document.getElementById('reset').addEventListener('click', ()=>{
+      document.querySelectorAll('input[type=radio]').forEach(i=>i.checked=false);
+      document.querySelectorAll('.q').forEach(d=>{d.classList.remove('correct','wrong'); d.querySelector('.key').classList.add('hideKey');});
+      document.getElementById('score').textContent = '';
+    });
+
+    document.getElementById('reveal').addEventListener('click', ()=>{
+      document.querySelectorAll('.q').forEach((div, idx)=>{
+        div.querySelector('.key').classList.remove('hideKey');
+      });
+    });
+  </script>
+</body>
+</html>
